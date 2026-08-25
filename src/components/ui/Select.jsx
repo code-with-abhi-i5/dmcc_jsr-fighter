@@ -1,0 +1,61 @@
+import React from "react";
+import { ChevronDown } from "lucide-react";
+
+export default function Select({
+  label,
+  id,
+  error,
+  options = [],
+  placeholder = "Select an option",
+  register,
+  ...props
+}) {
+  return (
+    <div className="space-y-1.5 relative z-10">
+      {label && (
+        <label
+          htmlFor={id}
+          className="block text-sm font-semibold text-slate-700 tracking-wide"
+        >
+          {label}
+          <span className="text-emerald-500 ml-1">*</span>
+        </label>
+      )}
+      <div className="relative group">
+        <select
+          id={id}
+          className={`
+            block w-full rounded-xl border bg-white px-4 py-3.5 text-base text-slate-900
+            appearance-none transition-all duration-300 shadow-sm
+            focus:outline-none focus:ring-2 focus:ring-emerald-500/20 pr-10
+            ${
+              error
+                ? "border-red-300 focus:border-red-500 bg-red-50/50"
+                : "border-slate-200 focus:border-emerald-500 hover:border-slate-300"
+            }
+          `}
+          {...(register || {})}
+          {...props}
+        >
+          <option value="" className="text-slate-400">{placeholder}</option>
+          {options.map((opt) => (
+            <option key={opt.value} value={opt.value} className="text-slate-900 py-2">
+              {opt.label}
+            </option>
+          ))}
+        </select>
+        <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none transition-colors duration-300 group-focus-within:text-emerald-600 text-slate-400">
+          <ChevronDown className="h-5 w-5" />
+        </div>
+      </div>
+      {error && (
+        <p className="text-xs text-red-500 flex items-center gap-1.5 mt-1 font-medium">
+          <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+          </svg>
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}

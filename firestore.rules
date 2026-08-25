@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow metadata counter updates (for DMCC-01, DMCC-02 sequential IDs)
+    match /metadata/{document=**} {
+      allow read, write: if true;
+    }
+    
+    match /registrations/{document=**} {
+      allow create: if true;
+      allow read: if true;
+      allow update, delete: if request.auth != null;
+    }
+  }
+}
