@@ -10,13 +10,14 @@ import { registrationSchema } from "../utils/validation";
 import { uploadToCloudinary } from "../services/cloudinary";
 import { checkDuplicatePhone, checkDuplicateJersey, createRegistration } from "../services/registration";
 import toast from "react-hot-toast";
+import qrCodeImage from "../assets/QRcode.png";
 
 const JERSEY_SIZES = [
-  { value: "S", label: "Small (S)" },
   { value: "M", label: "Medium (M)" },
   { value: "L", label: "Large (L)" },
   { value: "XL", label: "Extra Large (XL)" },
   { value: "XXL", label: "Double Extra Large (XXL)" },
+  { value: "XXXL", label: "Triple Extra Large (XXXL)" },
 ];
 
 export default function RegistrationForm({ onSuccess }) {
@@ -127,14 +128,7 @@ export default function RegistrationForm({ onSuccess }) {
               error={errors.phoneNumber?.message}
             />
 
-            <Input
-              label="UTR / Transaction ID"
-              id="utr"
-              placeholder="Payment Reference No."
-              icon={Info}
-              register={register("utr")}
-              error={errors.utr?.message}
-            />
+
 
             <div className="md:col-span-2 relative z-10 space-y-1.5">
               <label
@@ -192,6 +186,39 @@ export default function RegistrationForm({ onSuccess }) {
               register={register("jerseyNumber", { valueAsNumber: true })}
               error={errors.jerseyNumber?.message}
             />
+          </div>
+
+          <div className="mt-8 pt-8 border-t border-slate-100">
+            <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2 mb-6">
+              Payment Details
+            </h3>
+            <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+              <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+                <p className="text-sm font-semibold text-slate-700 mb-4 text-center">
+                  Scan QR Code to Pay
+                </p>
+                <img 
+                  src={qrCodeImage} 
+                  alt="Payment QR Code" 
+                  className="max-w-[200px] w-full h-auto rounded-xl shadow-md"
+                />
+              </div>
+              <div className="w-full md:w-1/2 flex flex-col justify-center h-full space-y-4">
+                <p className="text-sm text-slate-600">
+                  After successful payment, please enter the UTR (Unique Transaction Reference) or Transaction ID below for verification.
+                </p>
+                <div className="mt-2">
+                  <Input
+                    label="UTR / Transaction ID"
+                    id="utr"
+                    placeholder="Payment Reference No."
+                    icon={Info}
+                    register={register("utr")}
+                    error={errors.utr?.message}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
