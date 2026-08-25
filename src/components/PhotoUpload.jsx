@@ -137,7 +137,6 @@ export default function PhotoUpload({ value, onChange, error }) {
         ref={fileInputRef}
         type="file"
         accept="image/jpeg,image/jpg,image/png,image/webp"
-        capture="environment"
         onChange={handleInputChange}
         className="hidden"
       />
