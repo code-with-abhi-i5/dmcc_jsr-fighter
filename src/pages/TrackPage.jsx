@@ -6,6 +6,7 @@ import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { trackRegistration } from "../services/registration";
 import bannerImg from "../assets/banner.png";
+import PlayerCard from "../components/PlayerCard";
 
 export default function TrackPage() {
   const navigate = useNavigate();
@@ -153,6 +154,9 @@ export default function TrackPage() {
             </div>
           );
         })()}
+
+        {/* Player ID Card */}
+        {result && <PlayerCard data={result} />}
       </main>
     </div>
   );
