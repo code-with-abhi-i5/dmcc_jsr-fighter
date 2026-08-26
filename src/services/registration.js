@@ -85,6 +85,7 @@ export async function createRegistration(data) {
       playerPhotoUrl: data.playerPhotoUrl,
       phoneNumber: data.phoneNumber.trim(),
       address: data.address.trim(),
+      role: data.role,
       jerseySize: data.jerseySize,
       jerseyNumber: Number(data.jerseyNumber),
       utr: data.utr.trim(),

@@ -20,6 +20,12 @@ const JERSEY_SIZES = [
   { value: "XXXL", label: "Triple Extra Large (XXXL)" },
 ];
 
+const PLAYER_ROLES = [
+  { value: "Batsman", label: "Batsman" },
+  { value: "Bowler", label: "Bowler" },
+  { value: "All Rounder", label: "All Rounder" },
+];
+
 export default function RegistrationForm({ onSuccess }) {
   const [photoFile, setPhotoFile] = useState(null);
   const [photoError, setPhotoError] = useState("");
@@ -37,6 +43,7 @@ export default function RegistrationForm({ onSuccess }) {
       playerName: "",
       phoneNumber: "",
       address: "",
+      role: "",
       jerseySize: "",
       jerseyNumber: "",
       utr: "",
@@ -62,7 +69,7 @@ export default function RegistrationForm({ onSuccess }) {
 
       setSubmitStage("Uploading photo...");
       const photoUrl = await uploadToCloudinary(photoFile);
-      
+
       setSubmitStage("Saving details...");
       const registrationId = await createRegistration({
         ...data,
@@ -89,7 +96,7 @@ export default function RegistrationForm({ onSuccess }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="bg-white border border-slate-100 rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
-        
+
         <div className="relative z-10">
           <div className="mb-8 flex items-center justify-between border-b border-slate-100 pb-4">
             <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
@@ -111,7 +118,7 @@ export default function RegistrationForm({ onSuccess }) {
               <Input
                 label="Full Name"
                 id="playerName"
-                placeholder="e.g. Virat Kohli"
+                placeholder="e.g. MS Dhoni"
                 icon={User}
                 register={register("playerName")}
                 error={errors.playerName?.message}
@@ -128,8 +135,15 @@ export default function RegistrationForm({ onSuccess }) {
               error={errors.phoneNumber?.message}
             />
 
-
-
+            <Select
+              label="Player Role"
+              id="role"
+              options={PLAYER_ROLES}
+              placeholder="Select role"
+              register={register("role")}
+              error={errors.role?.message}
+            />
+            
             <div className="md:col-span-2 relative z-10 space-y-1.5">
               <label
                 htmlFor="address"
@@ -148,10 +162,9 @@ export default function RegistrationForm({ onSuccess }) {
                     block w-full rounded-xl border bg-white px-4 py-3.5 pl-11 text-base text-slate-900
                     placeholder:text-slate-400 transition-all duration-300 shadow-sm
                     focus:outline-none focus:ring-2 focus:ring-emerald-500/20 resize-none
-                    ${
-                      errors.address
-                        ? "border-red-300 focus:border-red-500 bg-red-50/50"
-                        : "border-slate-200 focus:border-emerald-500 hover:border-slate-300"
+                    ${errors.address
+                      ? "border-red-300 focus:border-red-500 bg-red-50/50"
+                      : "border-slate-200 focus:border-emerald-500 hover:border-slate-300"
                     }
                   `}
                   placeholder="Enter your complete address..."
@@ -181,7 +194,7 @@ export default function RegistrationForm({ onSuccess }) {
               label="Jersey Number"
               id="jerseyNumber"
               type="number"
-              placeholder="0-999"
+              placeholder="Enter jersey number"
               icon={Hash}
               register={register("jerseyNumber", { valueAsNumber: true })}
               error={errors.jerseyNumber?.message}
@@ -197,20 +210,20 @@ export default function RegistrationForm({ onSuccess }) {
                 <p className="text-sm font-semibold text-slate-700 mb-4 text-center">
                   Scan QR Code to Pay
                 </p>
-                <img 
-                  src={qrCodeImage} 
-                  alt="Payment QR Code" 
+                <img
+                  src={qrCodeImage}
+                  alt="Payment QR Code"
                   className="max-w-[200px] w-full h-auto rounded-xl shadow-md"
                 />
-                
+
                 <div className="mt-5 w-full flex flex-col items-center">
                   <div className="flex items-center gap-4 w-full mb-4">
                     <div className="h-px bg-slate-200 flex-1"></div>
                     <span className="text-xs text-slate-400 font-bold uppercase tracking-wider">OR</span>
                     <div className="h-px bg-slate-200 flex-1"></div>
                   </div>
-                  
-                  <a 
+
+                  <a
                     href="upi://pay?pa=huddad477-1@okhdfcbank&pn=DMCC&am=200&cu=INR"
                     className="w-full py-3 bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-md active:scale-95"
                   >

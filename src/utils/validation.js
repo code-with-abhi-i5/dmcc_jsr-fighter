@@ -16,6 +16,11 @@ export const registrationSchema = z.object({
     .min(5, "Address must be at least 5 characters long")
     .nonempty("Address is required"),
   
+  role: z
+    .enum(["Batsman", "Bowler", "All Rounder"], {
+      errorMap: () => ({ message: "Please select a player role" }),
+    }),
+  
   jerseySize: z
     .string()
     .nonempty("Please select a jersey size"),
