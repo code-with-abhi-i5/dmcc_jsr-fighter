@@ -74,7 +74,7 @@ export async function createRegistration(data) {
     }
 
     const newCount = currentCount + 1;
-    const formattedNumber = String(newCount).padStart(2, "0");
+    const formattedNumber = String(newCount).padStart(3, "0");
     finalRegistrationId = `DMCC-${formattedNumber}`;
 
     transaction.set(counterRef, { count: newCount }, { merge: true });
